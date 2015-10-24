@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Address Validation</title>
+</h:head>
+<h:body>
+	<h1>MapQuest Geo Address Validation</h1>
+	<h:form>
+		<p:fieldset legend="Address Validation" widgetVar="regWidget"
+			style="width: 600px;">
+			<h:panelGrid column="3" width="550" border="0">
+				<h:outputText value="Address Line One"></h:outputText>
+				<p:inputText value="#{addrValController.addressLineOne}"
+					id="addrLineOne" />
+
+				<h:outputText value="Street"></h:outputText>
+				<p:inputText value="#{addrValController.street}" id="street"
+					required="true" />
+
+				<h:outputText value="City * "></h:outputText>
+				<p:inputText value="#{addrValController.city}" id="city"
+					required="true" requiredMessage="City name is required" />
+
+
+				<h:outputText value="State * "></h:outputText>
+				<p:inputText value="#{addrValController.state}" id="state"
+					required="true" requiredMessage="State name is required"></p:inputText>
+
+				<h:outputText value="Country * "></h:outputText>
+				<p:inputText value="#{addrValController.country}" id="country"
+					required="true" requiredMessage="Country name is required"></p:inputText>
+
+				<h:outputText value="Zip Code * "></h:outputText>
+				<p:inputText value="#{addrValController.zipCode}" id="zipCode"
+					required="true" requiredMessage="Zip Code is required"></p:inputText>
+
+				<h:commandButton value="Validate Address"
+					action="#{addrValController.geoCodeAddressValidator}"></h:commandButton>
+			</h:panelGrid>
+			<h:panelGrid rendered="#{addrValController.showReslt}">
+				<h:outputText value="#{addrValController.renderResult}"></h:outputText>
+			</h:panelGrid>
+		</p:fieldset>
+	</h:form>
+</h:body>
+
+</html>
