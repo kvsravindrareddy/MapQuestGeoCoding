@@ -18,7 +18,7 @@ import com.ravindra.geocoding.service.standard.StandardGeocodingService;
 public class AddressValidatorController {
 
 	private static final Logger logger = Logger.getLogger(AddressValidatorController.class);
-	
+
 	private static final String KEY = "fGrxrJqv3MSUucNw87g6dPC7hscRq5ms";
 
 	private String addressLineOne;
@@ -64,27 +64,33 @@ public class AddressValidatorController {
 				Location[] locArr = res.getLocations();
 				logger.debug("*********No of locations found**********"+locArr.length);
 				for(Location loc : locArr) {
-					if(this.getCity().contains(loc.getAdminArea5()) && this.getCountry().contains(loc.getAdminArea1()) && this.getState().contains(loc.getAdminArea3()) && this.getZipCode().contains(loc.getPostalCode())) {
+					if(this.getCity().equalsIgnoreCase(loc.getAdminArea5()) && this.getCountry().equalsIgnoreCase(loc.getAdminArea1()) && this.getState().equalsIgnoreCase(loc.getAdminArea3()) && this.getZipCode().equalsIgnoreCase(loc.getPostalCode())) {
 						renderResult = "Exact match found for the given address";
 						logger.debug("--------Exact match-------------");
 						return "";
-					} else if((this.getCity().contains(loc.getAdminArea5()) || this.getState().contains(loc.getAdminArea3())) && this.getCountry().contains(loc.getAdminArea1()) && this.getZipCode().contains(loc.getPostalCode())) {
+					} else if((this.getCity().equalsIgnoreCase(loc.getAdminArea5()) || this.getState().equalsIgnoreCase(loc.getAdminArea3())) && this.getCountry().equalsIgnoreCase(loc.getAdminArea1()) && this.getZipCode().equalsIgnoreCase(loc.getPostalCode())) {
 						renderResult = "Partial match found";
-						city = "Please provide valid city : "+loc.getAdminArea5();
+						if(!this.getCity().equalsIgnoreCase(loc.getAdminArea5())) {
+							city = "Please provide valid city : "+loc.getAdminArea5();
+						}
+						if(!this.getState().equalsIgnoreCase(loc.getAdminArea3())) {
+							state = "Please provide valid state : "+loc.getAdminArea3();
+						}
 						logger.debug("--------Partial match-------------");
 						return "";
 					}
 					logger.debug(loc.getAdminArea1Type()+" : "+loc.getAdminArea1());//Country
 					logger.debug(loc.getAdminArea3Type()+" : "+loc.getAdminArea3());//State
 					logger.debug(loc.getAdminArea5Type()+" : "+loc.getAdminArea5());//City
+					logger.debug("Street : "+loc.getStreet());//Street
 					logger.debug("Postal Code : "+loc.getPostalCode());//Postal Code
 					logger.debug("Latitude : "+loc.getLatLng().getLat());
 					logger.debug("Langtitude : "+loc.getLatLng().getLng());
 					logger.debug("GeocodeQualityCode : "+loc.getGeocodeQualityCode());
 				}
 			}
-			renderResult = "Multiple address found..........";
-			return "";
+			//			renderResult = "Multiple address found..........";
+			//			return "";
 		}
 		renderResult = "No Match found for the given zip code and address details... Please enter valid address details";
 		return "";
