@@ -1,5 +1,3 @@
-package com.ravindra.geocoding.service.standard;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +9,7 @@ import com.ravindra.geocoding.service.request.ReverseGeocodeRequest;
 import com.ravindra.geocoding.service.request.ReverseGeocodeRequestBuilder;
 import com.ravindra.geocoding.service.response.Location;
 import com.ravindra.geocoding.service.response.Result;
+import com.ravindra.geocoding.service.standard.StandardGeocodingService;
 
 public class StandardGeocodingServiceTestCase {
 
